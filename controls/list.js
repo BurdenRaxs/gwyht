@@ -27,14 +27,20 @@ module.exports = {
 
     },
 
-    getHotList (req, res) {
-        func.connPool(sql.queryAll, 'hotlist', (err,result) => {
+    getHotCourse (req, res) {
+        func.connPool(sql.queryHot, 'hotcourse', (err,result) => {
             let rows = result;
             console.log('查询结果为: ', rows);
             res.json({code: 200, msg: 'ok', hots: rows});
         });
+    },
 
-
+    getNewCourse (req, res) {
+        func.connPool(sql.queryHot, 'newcourse', (err,result) => {
+            let rows = result;
+            console.log('查询结果为: ', rows);
+            res.json({code: 200, msg: 'ok', news: rows});
+        });
     },
 
     getCourseList(req, res) {
@@ -51,41 +57,55 @@ module.exports = {
 
     getCoursePage(req, res) {
         let pageid = req.body.pageid;
-        console.log(pageid);
         let p = (pageid-1)*25;
-        console.log(p);
-        // func.connPool(sql.queryAll, 'courselist', (err,result) => {
-        //     let rows = result;
-        //     let rows1 = rows.slice(25,50);
-        //     console.log('查询结果为: ', rows1);
-        //     res.json({code: 200, msg: 'ok', course: rows1});
-        // });
 
-        func.connPool(sql.queryLimit, ['courselist',p,p+25], (err,result) => {
-            let rows = result;
-            console.log('查询结果为: ', rows);
-            res.json({code: 200, msg: 'ok', course: rows});
-        });
-    },
-
-    getSortCourse(req, res) {
         let coursetype = req.body.type;
 
-        if(coursetype==1){
-            func.connPool(sql.queryLimit, ['courselist',0,25], (err,result) => {
+        if(coursetype == 1){
+            func.connPool(sql.queryAll, 'courselist', (err,result) => {
                 let rows = result;
-                console.log('查询结果为: ', rows);
-                res.json({code: 200, msg: 'ok', course: rows});
+                let lens = rows.length;
+                let sortedrows = rows.slice(p,p+25);
+
+                console.log('查询结果为: ', sortedrows);
+                res.json({code: 200, msg: 'ok', course: sortedrows , len :lens});
             });
-        }
-        else {
+        }else {
             func.connPool(sql.queryById, ['courselist','coursetype',coursetype-1], (err,result) => {
                 let rows = result;
-                console.log('查询结果为: ', rows);
-                res.json({code: 200, msg: 'ok', course: rows});
+                let lens = rows.length;
+                let sortedrows = rows.slice(p,p+25);
+                console.log('查询结果为: ', sortedrows);
+                res.json({code: 200, msg: 'ok', course: sortedrows , len :lens});
             });
         }
+
+
     },
+
+    // getSortCourse(req, res) {
+    //     let coursetype = req.body.type;
+    //
+    //     if(coursetype==1){
+    //
+    //         func.connPool(sql.queryAll, 'courselist', (err,result) => {
+    //             let rows = result;
+    //             let lens = rows.length;
+    //             let sortedrows = rows.slice(0,25);
+    //             console.log('查询结果为: ', sortedrows);
+    //             res.json({code: 200, msg: 'ok', course: sortedrows , len :lens});
+    //         });
+    //     }
+    //     else {
+    //         func.connPool(sql.queryById, ['courselist','coursetype',coursetype-1], (err,result) => {
+    //             let rows = result;
+    //             let lens = rows.length;
+    //             let sortedrows = rows.slice(0,25);
+    //             console.log('查询结果为: ', sortedrows);
+    //             res.json({code: 200, msg: 'ok', course: sortedrows , len :lens});
+    //         });
+    //     }
+    // },
 
 
     delUser (req, res) {

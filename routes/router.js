@@ -10,13 +10,14 @@ router.get('/',function (req, res, next) {
 
 router.get('/userList',a.getUserList);
 router.get('/carouselList',a.getCarouselList);
-router.get('/hotList',a.getHotList);
+router.get('/hotCourse',a.getHotCourse);
+router.get('/newCourse',a.getNewCourse);
 router.get('/courseList',a.getCourseList);
 
 
 router.post('/coursePage',a.getCoursePage);
 router.post('/userDelete',a.delUser);
-router.post('/courseSort',a.getSortCourse);
+
 
 
 module.exports = router;
