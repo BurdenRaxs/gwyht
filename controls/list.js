@@ -19,7 +19,7 @@ module.exports = {
     },
 
     getCarouselList (req, res) {
-        func.connPool(sql.queryAll, 'lunboimg', (err,result) => {
+        func.connPool(sql.queryAll, 'slide', (err,result) => {
             let rows = result;
             console.log('查询结果为: ', rows);
             res.json({code: 200, msg: 'ok', slides: rows});
@@ -28,7 +28,7 @@ module.exports = {
     },
 
     getHotCourse (req, res) {
-        func.connPool(sql.queryHot, 'hotcourse', (err,result) => {
+        func.connPool(sql.queryHot, 'hotcourselist', (err,result) => {
             let rows = result;
             console.log('查询结果为: ', rows);
             res.json({code: 200, msg: 'ok', hots: rows});
@@ -36,16 +36,16 @@ module.exports = {
     },
 
     getNewCourse (req, res) {
-        func.connPool(sql.queryHot, 'newcourse', (err,result) => {
+        func.connPool(sql.queryHot, 'newcourselist', (err,result) => {
             let rows = result;
             console.log('查询结果为: ', rows);
             res.json({code: 200, msg: 'ok', news: rows});
         });
     },
 
-    getCourseList(req, res) {
-
-        func.connPool(sql.queryAll, 'courselist', (err,result) => {
+    getCourseDetail(req, res) {
+        let id = req.body.courseid;
+        func.connPool(sql.queryById, ['courselist','courseid',id], (err,result) => {
             let rows = result;
             console.log('查询结果为: ', rows);
             res.json({code: 200, msg: 'ok', course: rows});
@@ -83,30 +83,28 @@ module.exports = {
 
     },
 
-    // getSortCourse(req, res) {
-    //     let coursetype = req.body.type;
-    //
-    //     if(coursetype==1){
-    //
-    //         func.connPool(sql.queryAll, 'courselist', (err,result) => {
-    //             let rows = result;
-    //             let lens = rows.length;
-    //             let sortedrows = rows.slice(0,25);
-    //             console.log('查询结果为: ', sortedrows);
-    //             res.json({code: 200, msg: 'ok', course: sortedrows , len :lens});
-    //         });
-    //     }
-    //     else {
-    //         func.connPool(sql.queryById, ['courselist','coursetype',coursetype-1], (err,result) => {
-    //             let rows = result;
-    //             let lens = rows.length;
-    //             let sortedrows = rows.slice(0,25);
-    //             console.log('查询结果为: ', sortedrows);
-    //             res.json({code: 200, msg: 'ok', course: sortedrows , len :lens});
-    //         });
-    //     }
-    // },
 
+
+    register(req,res){
+        let userid = req.body.userid;
+        let pwd = req.body.pwd;
+        let name = req.body.name;
+
+        func.connPool(sql.queryById, ['user','userid', userid ] , (err,result) => {
+            let rows = result;
+
+            if(rows.length == 0){
+
+                func.connPool(sql.register, [ userid , name , pwd ] , (err,result) => {
+                    res.json({code: 200, msg: 'ok'});
+
+                });
+            }else {
+                res.json({code: 500, msg: 'chongfu' });
+            }
+        });
+
+    },
 
     delUser (req, res) {
 

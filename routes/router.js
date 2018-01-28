@@ -12,7 +12,11 @@ router.get('/userList',a.getUserList);
 router.get('/carouselList',a.getCarouselList);
 router.get('/hotCourse',a.getHotCourse);
 router.get('/newCourse',a.getNewCourse);
-router.get('/courseList',a.getCourseList);
+
+router.post('/courseDetail',a.getCourseDetail);
+
+router.post('/register',a.register);
+
 
 
 router.post('/coursePage',a.getCoursePage);
