@@ -106,21 +106,110 @@ module.exports = {
 
     },
 
-    delUser (req, res) {
 
-        // let userid = req.body.id
-        // console.log(userid)
-        //
-        // pool.getConnection((err,conn)=>{
-        //     conn.query('DELETE FROM ?? WHERE userid=?',['user',userid], function(err,result) {
-        //         if (err) throw err;
-        //     });
-        // })
-        // res.json({code: 200, msg: 'ok', msg: 'done'});
-        let userid = req.body.id
-        console.log(userid)
-        func.connPool(sql.del, ['user','userid',userid] , (err,result) => {
-            res.json({code: 200, msg: 'ok', msg: 'done'});
+    login(req,res){
+        let userid = req.body.userid;
+        let pwd = req.body.pwd;
+
+
+        func.connPool(sql.queryById, ['user','userid', userid ] , (err,result) => {
+            let rows = result;
+
+            if(rows.length == 0){
+
+                res.json({code: 501, msg: 'weizhaodao' });
+            }else {
+                if(rows[0].password == pwd){
+                    res.json({code: 200, msg: 'weizhaodao', user:rows });
+                }else {
+                    res.json({code: 502, msg: 'mimacuowu' });
+                }
+            }
         });
-    }
+
+    },
+
+    getCart(req,res){
+
+        let userid = req.body.userid;
+
+        func.connPool(sql.queryCart, ['shopcart','userid', userid ] , (err,result) => {
+            let rows = result;
+
+            if(rows.length == 0){
+
+                res.json({code: 501, msg: 'weizhaodao' });
+            }else {
+
+                res.json({code: 200, msg: 'ok', cart:rows });
+
+            }
+        });
+
+    },
+
+
+    addCart(req,res){
+
+        let userid = req.body.userid;
+        let courseid = req.body.courseid;
+
+        func.connPool(sql.queryCart, ['shopcart','userid', userid ] , (err,result) => {
+            let rows = result;
+
+            if(rows.length == 0){
+
+                func.connPool(sql.addCart,[userid,courseid] ,(err,result) =>{
+                    res.json({code: 200, msg: 'ok' });
+                })
+            }else {
+                let com = false
+                for(let i in rows){
+
+                    if(rows[i].courseid == courseid){
+                        res.json({code: 503, msg: 'no'});
+                        com = true
+                        break;
+                    }
+                }
+                if(com == false){
+                    func.connPool(sql.addCart,[userid,courseid] ,(err,result) =>{
+                        res.json({code: 200, msg: 'ok' });
+                    })
+                }
+
+            }
+        });
+
+    },
+
+    delCart(req,res){
+
+        let userid = req.body.userid;
+        let courseid = req.body.courseid;
+
+        func.connPool(sql.delCart, ['shopcart', userid , courseid] , (err,result) => {
+            res.json({code: 200, msg: 'ok' });
+        });
+
+    },
+
+    // delUser (req, res) {
+    //
+    //     // let userid = req.body.id
+    //     // console.log(userid)
+    //     //
+    //     // pool.getConnection((err,conn)=>{
+    //     //     conn.query('DELETE FROM ?? WHERE userid=?',['user',userid], function(err,result) {
+    //     //         if (err) throw err;
+    //     //     });
+    //     // })
+    //     // res.json({code: 200, msg: 'ok', msg: 'done'});
+    //     let userid = req.body.id
+    //     console.log(userid)
+    //     func.connPool(sql.del, ['user','userid',userid] , (err,result) => {
+    //         res.json({code: 200, msg: 'ok', msg: 'done'});
+    //     });
+    // }
+
 }

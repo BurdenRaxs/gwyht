@@ -16,11 +16,15 @@ router.get('/newCourse',a.getNewCourse);
 router.post('/courseDetail',a.getCourseDetail);
 
 router.post('/register',a.register);
+router.post('/login',a.login);
+router.post('/getcart',a.getCart);
+router.post('/addcart',a.addCart);
+router.post('/delcart',a.delCart);
 
 
 
 router.post('/coursePage',a.getCoursePage);
-router.post('/userDelete',a.delUser);
+// router.post('/userDelete',a.delUser);
 
 
 
