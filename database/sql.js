@@ -8,4 +8,6 @@ module.exports = {
     register: 'INSERT INTO user (userid,username, password) VALUES (?,?,?)',
     addCart: 'INSERT INTO shopcart (userid,courseid) VALUES (?,?)',
     delCart: 'DELETE FROM ?? WHERE userid = ? and courseid = ?',
+    addOrder: 'INSERT INTO orders (userid,userorder) VALUES (?,?)',
+    getOrder: 'SELECT userorder FROM orders WHERE userid = ?',
 };

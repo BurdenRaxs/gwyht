@@ -20,6 +20,7 @@ router.post('/login',a.login);
 router.post('/getcart',a.getCart);
 router.post('/addcart',a.addCart);
 router.post('/delcart',a.delCart);
+router.post('/pay',a.getPay);
 
 
 

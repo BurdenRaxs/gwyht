@@ -148,38 +148,63 @@ module.exports = {
 
     },
 
-
     addCart(req,res){
 
         let userid = req.body.userid;
         let courseid = req.body.courseid;
 
-        func.connPool(sql.queryCart, ['shopcart','userid', userid ] , (err,result) => {
-            let rows = result;
+        func.connPool(sql.queryById, [ 'orders','userid' , userid ] , (err,result) => {
+            let row = result
+            let coursearr = []
 
-            if(rows.length == 0){
+            let state = false;
 
-                func.connPool(sql.addCart,[userid,courseid] ,(err,result) =>{
-                    res.json({code: 200, msg: 'ok' });
-                })
-            }else {
-                let com = false
-                for(let i in rows){
-
-                    if(rows[i].courseid == courseid){
-                        res.json({code: 503, msg: 'no'});
-                        com = true
-                        break;
-                    }
-                }
-                if(com == false){
-                    func.connPool(sql.addCart,[userid,courseid] ,(err,result) =>{
-                        res.json({code: 200, msg: 'ok' });
-                    })
-                }
+            for (let n in row) {
+                let str = row[n].userorder;
+                let spl = str.split(',')
+                coursearr = coursearr.concat(spl)
 
             }
+            for (let m in coursearr) {
+                if (coursearr[m] == courseid) {
+
+                    state = true;
+                    break;
+                }
+            }
+            if(state == true){
+
+                res.json({code: 505, msg: 'yigoumai'});
+            }else {
+                func.connPool(sql.queryCart, ['shopcart','userid', userid ] , (err,result) => {
+                    let rows = result;
+
+                    if(rows.length == 0){
+
+                        func.connPool(sql.addCart,[userid,courseid] ,(err,result) =>{
+                            res.json({code: 200, msg: 'ok' });
+                        })
+                    }else {
+                        let com = false
+                        for(let i in rows){
+
+                            if(rows[i].courseid == courseid){
+                                res.json({code: 503, msg: 'gouwucheyiyou'});
+                                com = true
+                                break;
+                            }
+                        }
+                        if(com == false){
+                            func.connPool(sql.addCart,[userid,courseid] ,(err,result) =>{
+                                res.json({code: 200, msg: 'ok' });
+                            })
+                        }
+
+                    }
+                });
+            }
         });
+
 
     },
 
@@ -190,6 +215,28 @@ module.exports = {
 
         func.connPool(sql.delCart, ['shopcart', userid , courseid] , (err,result) => {
             res.json({code: 200, msg: 'ok' });
+        });
+
+    },
+
+    getPay(req,res){
+
+        let orderdata = req.body.order;
+        let userid = orderdata[0].userid;
+        let arr = []
+
+        for(let i in orderdata){
+            arr.push(orderdata[i].courseid)
+        }
+        let order = arr.join(',');
+
+
+
+        func.connPool(sql.addOrder, [ userid ,order ] , (err,result) => {
+            res.json({code: 200, msg: 'ok' });
+        });
+        func.connPool(sql.del, [ 'shopcart','userid' , userid ] , (err,result) => {
+            console.log('ok')
         });
 
     },
