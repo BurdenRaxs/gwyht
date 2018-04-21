@@ -8,10 +8,14 @@ router.get('/',function (req, res, next) {
     res.render('index', { title: 'rout' });
 });
 
+
 router.get('/userList',a.getUserList);
 router.get('/carouselList',a.getCarouselList);
 router.get('/hotCourse',a.getHotCourse);
 router.get('/newCourse',a.getNewCourse);
+
+router.post('/getUserCourse',a.getUserCourse);
+router.post('/getUserOrder',a.getUserOrder);
 
 router.post('/courseDetail',a.getCourseDetail);
 
@@ -25,6 +29,8 @@ router.post('/pay',a.getPay);
 
 
 router.post('/coursePage',a.getCoursePage);
+
+router.post('/changePassword',a.changePassword);
 // router.post('/userDelete',a.delUser);
 
 

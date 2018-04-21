@@ -2,6 +2,7 @@ let func = require('./../database/func')
 let sql = require('./../database/sql')
 
 module.exports = {
+
     getUserList (req, res) {
         func.connPool(sql.queryAll, 'user', (err,result) => {
             let rows = result;
@@ -240,7 +241,56 @@ module.exports = {
         });
 
     },
+    getUserCourse(req,res){
+        let userid = req.body.userid;
 
+        func.connPool(sql.queryById,[ 'orders','userid' , userid ] , (err,result) => {
+            let rows = result;
+            let coursearr = [];
+            for (let n in rows) {
+                let str = rows[n].userorder;
+                let spl = str.split(',')
+                coursearr = coursearr.concat(spl)
+            }
+            let instring = "'"+coursearr.join("','")+"'";
+            console.log(instring)
+            let usercourse = "select * from courselist where courseid in ("+instring+")";
+            func.connPool(usercourse, (err,result) => {
+                let final = result;
+                res.json({code: 200, msg: 'ok',course: final });
+            });
+        });
+    },
+    getUserOrder(req,res){
+        let userid = req.body.userid;
+
+        func.connPool(sql.queryById,[ 'orders','userid' , userid ] , (err,result) => {
+            let rows = result;
+            res.json({code: 200, msg: 'ok',course: rows });
+        });
+    },
+    changePassword(req,res){
+        let oldpass = req.body.oldpassword;
+        let newpass = req.body.newpassword;
+        let userid = req.body.userid;
+        console.log(oldpass);
+        console.log(newpass);
+        func.connPool(sql.queryById, ['user','userid', userid ] , (err,result) => {
+            let rows = result;
+
+            if(rows[0].password == oldpass){
+                func.connPool(sql.changepass, [ newpass, userid ] , (err,result) =>{
+                    res.json({code: 200, msg: 'xiugaichenggong' });
+                })
+
+            }else {
+
+                res.json({code: 506, msg: 'mimacuowu' });
+
+            }
+        });
+
+    }
     // delUser (req, res) {
     //
     //     // let userid = req.body.id
