@@ -2,36 +2,36 @@ let express = require('express');
 let router = express.Router();
 
 
-let a = require('./../controls/list')
+let user = require('../controls/user')
 
 router.get('/',function (req, res, next) {
-    res.render('index', { title: 'rout' });
+    res.render('index', { title: 'api' });
 });
 
 
-router.get('/userList',a.getUserList);
-router.get('/carouselList',a.getCarouselList);
-router.get('/hotCourse',a.getHotCourse);
-router.get('/newCourse',a.getNewCourse);
+router.get('/userList',user.getUserList);
+router.get('/carouselList',user.getCarouselList);
+router.get('/hotCourse',user.getHotCourse);
+router.get('/newCourse',user.getNewCourse);
 
-router.post('/getUserCourse',a.getUserCourse);
-router.post('/getUserOrder',a.getUserOrder);
+router.post('/getUserCourse',user.getUserCourse);
+router.post('/getUserOrder',user.getUserOrder);
 
-router.post('/courseDetail',a.getCourseDetail);
+router.post('/courseDetail',user.getCourseDetail);
 
-router.post('/register',a.register);
-router.post('/login',a.login);
-router.post('/getcart',a.getCart);
-router.post('/addcart',a.addCart);
-router.post('/delcart',a.delCart);
-router.post('/pay',a.getPay);
+router.post('/register',user.register);
+router.post('/login',user.login);
+router.post('/getcart',user.getCart);
+router.post('/addcart',user.addCart);
+router.post('/delcart',user.delCart);
+router.post('/pay',user.getPay);
 
 
 
-router.post('/coursePage',a.getCoursePage);
+router.post('/coursePage',user.getCoursePage);
 
-router.post('/changePassword',a.changePassword);
-// router.post('/userDelete',a.delUser);
+router.post('/changePassword',user.changePassword);
+
 
 
 

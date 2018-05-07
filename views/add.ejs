@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <style type="text/css">
+            body{
+                width: 1000px;
+                margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="input1" class="col-sm-2 control-label">课程号</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="courseid" placeholder="courseid">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input2" class="col-sm-2 control-label">课程名</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="coursename" placeholder="coursename">
+                </div>
+            </div><div class="form-group">
+                <label for="input2" class="col-sm-2 control-label">价格</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="price" placeholder="price">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input2" class="col-sm-2 control-label">图片路径</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="imgurl" placeholder="imgurl">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input2" class="col-sm-2 control-label">课程类型</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="coursetype" placeholder="coursetype">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input2" class="col-sm-2 control-label">大图</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="bigimg" placeholder="bigimg">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input2" class="col-sm-2 control-label">详情</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="details" placeholder="details">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input2" class="col-sm-2 control-label">描述</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="describe" placeholder="describe">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input2" class="col-sm-2 control-label">视频路径</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="videourl" placeholder="videourl">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default" onclick="sumbit()">提交</button>
+                </div>
+            </div>
+        </form>
+        <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+        <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            function sumbit() {
+                var courseid = $('#courseid').val();
+                var coursename = $('#coursename').val();
+                var price = $('#price').val();
+                var imgurl = $('#imgurl').val();
+                var coursetype = $('#coursetype').val();
+                var bigimg = $('#bigimg').val();
+                var details = $('#details').val();
+                var describe = $('#describe').val();
+                var videourl = $('#videourl').val();
+                // let func = require('./../database/func')
+                // let sql = require('../database/sql')
+                // func.connPool(sql.queryAll, 'user', (err,result) => {
+                //     let rows = result;
+                //     console.log(rows)
+                // });
+                $.ajax({
+                    url:"/addcourse",
+                    type: "post",
+                    datatype:'json',
+                    data: {
+                       "courseid": courseid,
+                       "coursename": coursename,
+                       "price": price,
+                       "imgurl": imgurl,
+                       "coursetype": coursetype,
+                       "bigimg": bigimg,
+                       "details": details,
+                       "describe": describe,
+                       "videourl": videourl
+                    },
+                    success: function (returnValue) {
+                        alert("cg");
+                    },
+                    error: function (returnValue) {
+
+                    }
+                })
+            }
+        </script>
+    </body>
+</html>
