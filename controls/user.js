@@ -290,6 +290,24 @@ module.exports = {
             }
         });
 
+    },
+    getEvaluation(req,res){
+        let courseid = req.body.courseid;
+
+        func.connPool(sql.queryById,['evaluation','courseid',courseid] , (err,result) => {
+            let rows = result;
+            console.log(rows)
+            res.json({code: 200, msg: 'ok',eva: rows });
+        });
+    },
+    toEvaluation(req,res){
+        let courseid = req.body.courseid;
+        let username = req.body.username;
+        let text = req.body.text;
+        console.log(courseid+username+text)
+        func.connPool(sql.insEvaluation,[username,courseid,text] , (err,result) => {
+            res.json({code: 200, msg: 'ok' });
+        });
     }
 
 

@@ -15,4 +15,5 @@ module.exports = {
     updCourse: 'UPDATE courselist SET coursename=?,price=?,imgurl=?,coursetype=?,bigimg=?,details=?,describes=?,videourl=? WHERE courseid = ? ',
     updHotlist: 'UPDATE hotcourselist SET courseid=? WHERE hotid = ? ',
     updNewlist: 'UPDATE newcourselist SET courseid=? WHERE newid = ? ',
+    insEvaluation:'INSERT INTO evaluation (username,courseid,text)VALUES (?,?,?)'
 };

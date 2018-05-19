@@ -32,6 +32,9 @@ router.post('/coursePage',user.getCoursePage);
 
 router.post('/changePassword',user.changePassword);
 
+router.post('/getEvaluation',user.getEvaluation);
+router.post('/toEvaluation',user.toEvaluation);
+
 
 
 
