@@ -9,5 +9,10 @@ module.exports = {
     addCart: 'INSERT INTO shopcart (userid,courseid) VALUES (?,?)',
     delCart: 'DELETE FROM ?? WHERE userid = ? and courseid = ?',
     addOrder: 'INSERT INTO orders (userid,userorder) VALUES (?,?)',
-    changepass: 'UPDATE user set password= ? where userid= ? ;'
+    changepass: 'UPDATE user set password= ? where userid= ? ;',
+    delCourse: 'DELETE FROM courselist WHERE courseid = ? ',
+    insCourse:'INSERT INTO courselist VALUES (?,?,?,?,?,?,?,?,?)',
+    updCourse: 'UPDATE courselist SET coursename=?,price=?,imgurl=?,coursetype=?,bigimg=?,details=?,describes=?,videourl=? WHERE courseid = ? ',
+    updHotlist: 'UPDATE hotcourselist SET courseid=? WHERE hotid = ? ',
+    updNewlist: 'UPDATE newcourselist SET courseid=? WHERE newid = ? ',
 };

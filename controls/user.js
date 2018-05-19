@@ -291,22 +291,6 @@ module.exports = {
         });
 
     }
-    // delUser (req, res) {
-    //
-    //     // let userid = req.body.id
-    //     // console.log(userid)
-    //     //
-    //     // pool.getConnection((err,conn)=>{
-    //     //     conn.query('DELETE FROM ?? WHERE userid=?',['user',userid], function(err,result) {
-    //     //         if (err) throw err;
-    //     //     });
-    //     // })
-    //     // res.json({code: 200, msg: 'ok', msg: 'done'});
-    //     let userid = req.body.id
-    //     console.log(userid)
-    //     func.connPool(sql.del, ['user','userid',userid] , (err,result) => {
-    //         res.json({code: 200, msg: 'ok', msg: 'done'});
-    //     });
-    // }
+
 
 }
