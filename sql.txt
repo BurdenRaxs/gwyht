@@ -24,22 +24,28 @@ CREATE TABLE `courselist` (
   `courseid` int(32) NOT NULL,
   `coursename` varchar(64) DEFAULT NULL,
   `price` decimal(32,2) DEFAULT NULL,
-  `imgurl` varchar(64) NOT NULL,
-  `coursetype` int(32) NOT NULL,
+  `imgurl` varchar(64) DEFAULT NULL,
+  `coursetype` int(32) DEFAULT NULL,
   `bigimg` varchar(64) DEFAULT NULL,
   `details` varchar(255) DEFAULT NULL,
-  `descirbe` varchar(255) NOT NULL,
+  `describes` varchar(255) DEFAULT NULL,
   `videourl` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `orders` (
-  `orderid` int(32) NOT NULL,
+  `orderid` int(32) NOT NULL auto_increment PRIMARY KEY,
   `userid` varchar(64) DEFAULT NULL,
   `userorder` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `shopcart` (
-  `cartid` int(16) NOT NULL,
+  `cartid` int(16) NOT NULL auto_increment PRIMARY KEY,
   `userid` varchar(32) DEFAULT NULL,
   `courseid` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `evaluation` (
+  `courseid` int(16) NOT NULL,
+  `username` varchar(32) DEFAULT NULL,
+  `text` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
